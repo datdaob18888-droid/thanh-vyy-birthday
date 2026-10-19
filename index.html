@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff0f5">
+  <title>Gửi Thanh Vyy ♡</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: #693b50;
+      background: linear-gradient(135deg, #fff7fa, #ffe0ec, #fff0f5);
+    }
+    .app {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .sparkle {
+      position: absolute;
+      color: #e985ae;
+      font-size: 30px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .s1 { top: 8%; left: 9%; }
+    .s2 { top: 17%; right: 10%; animation-delay: .5s; }
+    .s3 { bottom: 12%; left: 12%; animation-delay: 1s; }
+    .s4 { bottom: 10%; right: 12%; animation-delay: .8s; }
+    .card {
+      width: min(100%, 620px);
+      text-align: center;
+      border: 1px solid #f4c5d8;
+      border-radius: 28px;
+      padding: clamp(24px, 6vw, 46px);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 20px 60px rgba(190,91,132,.16);
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 99px;
+      color: #c94f83;
+      background: #ffe0ec;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .hero-heart {
+      font-size: 55px;
+      margin: 18px 0 4px;
+      animation: pulse 1.5s infinite;
+    }
+    h1 {
+      margin: 5px 0 12px;
+      font-size: clamp(34px, 8vw, 54px);
+      line-height: 1.12;
+    }
+    h1 span { color: #c94f83; }
+    .intro {
+      max-width: 440px;
+      margin: 0 auto;
+      color: #93697b;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .divider {
+      margin: 25px 0;
+      color: #e985ae;
+      letter-spacing: 10px;
+    }
+    .envelope-wrap {
+      margin: 10px auto 18px;
+      width: 150px;
+      height: 112px;
+      position: relative;
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      display: block;
+      transition: transform .2s;
+    }
+    .envelope-wrap:hover { transform: translateY(-4px); }
+    .envelope {
+      position: absolute;
+      inset: 17px 5px 0;
+      border-radius: 9px;
+      background: #f6a9c8;
+      box-shadow: 0 10px 20px rgba(196,72,124,.18);
+    }
+    .envelope::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      margin: auto;
+      width: 0;
+      height: 0;
+      border-left: 70px solid transparent;
+      border-right: 70px solid transparent;
+      border-top: 52px solid #ed8eb4;
+      transform-origin: top;
+      transition: transform .5s;
+    }
+    .envelope::after {
+      content: "♡";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 31px;
+      color: white;
+      font-size: 28px;
+    }
+    .envelope-wrap.opened .envelope::before {
+      transform: rotateX(180deg);
+    }
+    .tap-hint { color: #93697b; font-size: 13px; }
+    .letter {
+      display: none;
+      text-align: left;
+      border-radius: 20px;
+      padding: 22px;
+      background: #fff3f8;
+      border: 1px dashed #eaa0bd;
+    }
+    .letter.visible { display: block; animation: appear .5s ease; }
+    .letter h2 {
+      text-align: center;
+      color: #c94f83;
+      font-size: 23px;
+    }
+    .letter p { line-height: 1.85; font-size: 15px; }
+    .signature {
+      text-align: right;
+      color: #c94f83;
+      font-weight: bold;
+      margin-top: 18px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 23px;
+    }
+    button.action {
+      border: 0;
+      border-radius: 99px;
+      padding: 13px 19px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .primary {
+      color: white;
+      background: linear-gradient(135deg, #ed8eb4, #cf5b8c);
+    }
+    .secondary { color: #c94f83; background: #ffe3ee; }
+    .footer {
+      margin-top: 26px;
+      color: #93697b;
+      font-size: 12px;
+    }
+    .floating-heart {
+      position: fixed;
+      z-index: 5;
+      bottom: -30px;
+      pointer-events: none;
+      animation: floatUp 3.5s ease-in forwards;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.09); }
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatUp {
+      to { transform: translateY(-110vh) rotate(30deg); opacity: 0; }
+    }
+    @media (max-width: 420px) {
+      .card { border-radius: 23px; }
+      .letter { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">♡</span>
+    <span class="sparkle s3">✧</span>
+    <span class="sparkle s4">♡</span>
+
+    <section class="card">
+      <div class="eyebrow">A LITTLE BIRTHDAY SURPRISE</div>
+      <div class="hero-heart">💗</div>
+
+      <h1>Happy Birthday,<br><span>Thanh Vyy!</span></h1>
+
+      <p class="intro">
+        Hôm nay là ngày của một cô gái thật đáng yêu.
+        Có một món quà nho nhỏ đang chờ Vyy mở ra nè… 🎀
+      </p>
+
+      <div class="divider">♡ ♡ ♡</div>
+
+      <button class="envelope-wrap" id="envelopeButton"
+        aria-label="Mở phong thư sinh nhật">
+        <span class="envelope"></span>
+      </button>
+
+      <p class="tap-hint" id="hint">
+        Chạm vào chiếc phong thư để mở nha ✉️
+      </p>
+
+      <article class="letter" id="letter">
+        <h2>Gửi Thanh Vyy 🌷</h2>
+
+        <p>
+          Chúc Vyy tuổi mới lúc nào cũng vui vẻ, xinh xắn,
+          gặp thật nhiều điều dễ thương và luôn có những
+          người làm Vyy mỉm cười mỗi ngày.
+        </p>
+
+        <p>
+          Mong những điều Vyy thích sẽ từ từ đến bên Vyy,
+          những ngày mệt sẽ nhẹ nhàng hơn, còn những ngày vui
+          thì kéo dài thiệt lâu nha. ✨
+        </p>
+
+        <p>
+          Và… anh có một mong muốn hơi ích kỷ xíu:
+          hy vọng trong những điều khiến Vyy vui,
+          sẽ có đôi lúc là tin nhắn của anh nữa. 🤭💞
+        </p>
+
+        <p>
+          Hãy cứ là Thanh Vyy đáng yêu theo cách riêng của mình nhé.
+          Chúc cô gái đặc biệt hôm nay có một sinh nhật thật ngọt ngào! 🎂
+        </p>
+
+        <p class="signature">
+          Một người đang muốn hiểu Vyy nhiều hơn ♡
+        </p>
+      </article>
+
+      <div class="actions">
+        <button class="action primary" id="heartButton">
+          Gửi Vyy một trời tim 💕
+        </button>
+        <button class="action secondary" id="againButton">
+          Đọc lại lời chúc ↻
+        </button>
+      </div>
+
+      <p class="footer">
+        Made with a little courage & lots of pink · 27.10.2026
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const envelopeButton = document.getElementById('envelopeButton');
+    const letter = document.getElementById('letter');
+    const hint = document.getElementById('hint');
+
+    function burstHearts(count) {
+      const symbols = ['💗', '💕', '💖', '♡', '🌸', '✨'];
+
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'floating-heart';
+        heart.textContent =
+          symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = (4 + Math.random() * 92) + 'vw';
+        heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+        heart.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+
+        document.body.appendChild(heart);
+        heart.addEventListener('animationend', () => heart.remove());
+      }
+    }
+
+    function openLetter() {
+      envelopeButton.classList.add('opened');
+      letter.classList.add('visible');
+      hint.textContent = 'Một lời chúc nhỏ, dành riêng cho Vyy 💌';
+      letter.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      burstHearts(12);
+    }
+
+    envelopeButton.addEventListener('click', openLetter);
+
+    document.getElementById('heartButton').addEventListener('click', () => {
+      burstHearts(28);
+    });
+
+    document.getElementById('againButton').addEventListener('click', () => {
+      openLetter();
+      letter.animate(
+        [{ transform: 'scale(.98)' }, { transform: 'scale(1)' }],
+        { duration: 350 }
+      );
+    });
+  </script>
+</body>
+</html>
